@@ -67,6 +67,9 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
 
         self.show()
 
+        receive_thread = threading.Thread(target=self.receive)
+        receive_thread.start()
+
     def check_ships(self):
         error = []
         ships = []
@@ -139,42 +142,50 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
 
     def puh(self):
         button = self.sender()
+        for btn in self.btns_2:
+            btn.setEnabled(False)
         message = button.objectName()[:-2]
         message = 'puh' + message
         self.client.send(message.encode('ascii'))
-        receive_thread = threading.Thread(target=self.receive)
-        receive_thread.start()
 
     def receive(self):
         while True:
             try:
                 message = self.client.recv(1024).decode('ascii')
                 self.text_field.setText(message)
+                self.check_puh(message)
             except:
                 self.text_field.setText("Error! Reload app")
                 self.client.close()
                 break
 
-    """def check_puh(self, message):
-        for btn in self.btns:
-            if btn.objectName() == message:
-                message = btn
-                break
-        if message.text():
-            print('X')
-            self.client.send(('X', str(message.objectName())+'_2'))
+    def check_puh(self, message):
+        if message[:3] == 'puh':
+            message = message[3:]
+            for btn in self.btns:
+                if btn.objectName() == message:
+                    message = btn
+                    break
+            if message.text():
+                message.setStyleSheet('color:red')
+                message = 'X' + message.objectName()+'_2'
+                self.client.send(message.encode('ascii'))
+            else:
+                message.setText('*')
+                message = '*' + str(message.objectName()) + '_2'
+                self.client.send(message.encode('ascii'))
+            for btn in self.btns_2:
+                btn.setEnabled(True)
         else:
-            print('*')
-            message.setText('*')
-            self.client.send(('*', str(message.objectName()) + '_2'))
-
-    def mark_btn(self, message):
-        print(message)
-        for btn in self.btns:
-            if btn.objectName() == message[1]:
-                that_btn = btn
-                break
-        that_btn.setText(message[0])"""
+            self.text_field.setText(message)
+            mark = message[0]
+            message = message[1:]
+            for btn in self.btns_2:
+                if btn.objectName() == message:
+                    message = btn
+                    break
+            message.setText(mark)
+            self.btns_2.remove(message)
 
 
 if __name__ == '__main__':

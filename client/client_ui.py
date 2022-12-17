@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(10, 10, 561, 291))
         self.frame.setTabletTracking(False)
-        self.frame.setStyleSheet("background-image: url(:/background/background.png);")
+        self.frame.setStyleSheet("")
         self.frame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame.setObjectName("frame")
@@ -1455,6 +1455,7 @@ class Ui_MainWindow(object):
         self.nickname.setObjectName("nickname")
         self.text_field = QtWidgets.QLabel(self.frame)
         self.text_field.setGeometry(QtCore.QRect(320, 270, 100, 23))
+        self.text_field.setText("")
         self.text_field.setObjectName("text_field")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -1468,4 +1469,3 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.ok.setText(_translate("MainWindow", "ok"))
-        self.text_field.setText(_translate("MainWindow", " "))

@@ -16,6 +16,8 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
         self.client.connect(('127.0.0.1', 7010))
         uic.loadUi("untitled.ui", self)
 
+        self.setStyleSheet("#frame{border-image:url(static/background.jpg)}")
+
         self.btns = [self.a1s, self.a2s, self.a3s, self.a4s, self.a5s, self.a6s, self.a7s, self.a8s, self.a9s,
                      self.a10s,
                      self.b1s, self.b2s, self.b3s, self.b4s, self.b5s, self.b6s, self.b7s, self.b8s, self.b9s,
@@ -120,8 +122,11 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                             y == 9 or lst1[x][y + 1] == 0):
                         ships.append(lst1[x][y])
         # счетчик кораблей
-        """if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
-            error.append(4)"""
+        if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
+            error.append(4)
+
+        self.lst1 = lst1
+
 
         if len(error) == 0:
             for btn in self.btns:
@@ -168,7 +173,8 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                     break
             if message.text():
                 message.setStyleSheet('color:red')
-                message = 'X' + message.objectName()+'_2'
+                mark = self.hurt_or_kill(message.objectName())
+                message = mark + message.objectName()+'_2'
                 self.client.send(message.encode('ascii'))
             else:
                 message.setText('*')
@@ -187,6 +193,34 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
             message.setText(mark)
             self.btns_2.remove(message)
 
+    def hurt_or_kill(self, btn):
+        column = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9}
+        x = column[btn[0]]
+        y = int(btn[1])-1 if btn[2] == 's' else int(btn[1:3])-1
+
+        r = 0
+        x1 = x
+        y1 = y
+        while x1>0 and self.lst1[x1-1][y] != 0:
+            if self.lst1[x1-1][y] > 0:
+                r += 1
+            x1 -= 1
+        x1 = x
+        while x1<9 and self.lst1[x1+1][y] != 0:
+            if self.lst1[x1+1][y] > 0:
+                r += 1
+            x1 += 1
+        while y1>0 and self.lst1[x][y1-1] != 0:
+            if self.lst1[x][y1-1] > 0:
+                r += 1
+            y1 -= 1
+        y1 = y
+        while y1<9 and self.lst1[x][y1+1] != 0:
+            if self.lst1[x][y1+1] > 0:
+                r += 1
+            y1 += 1
+        self.lst1[x][y] = -1
+        return 'r' if r > 0 else 'X'
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

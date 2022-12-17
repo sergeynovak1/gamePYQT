@@ -122,8 +122,8 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                             y == 9 or lst1[x][y + 1] == 0):
                         ships.append(lst1[x][y])
         # счетчик кораблей
-        if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
-            error.append(4)
+        '''if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
+            error.append(4)'''
 
         self.lst1 = lst1
 
@@ -180,8 +180,8 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                 message.setText('*')
                 message = '*' + str(message.objectName()) + '_2'
                 self.client.send(message.encode('ascii'))
-            for btn in self.btns_2:
-                btn.setEnabled(True)
+                for btn in self.btns_2:
+                    btn.setEnabled(True)
         else:
             self.text_field.setText(message)
             mark = message[0]
@@ -192,6 +192,10 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                     break
             message.setText(mark)
             self.btns_2.remove(message)
+            if mark == 'X' or mark == 'r':
+                for btn in self.btns_2:
+                    btn.setEnabled(True)
+
 
     def hurt_or_kill(self, btn):
         column = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9}
@@ -221,6 +225,7 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
             y1 += 1
         self.lst1[x][y] = -1
         return 'r' if r > 0 else 'X'
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -51,5 +51,5 @@ def receive():
         thread.start()
 
 
-os.system('clear')
+os.system('cls')
 receive()

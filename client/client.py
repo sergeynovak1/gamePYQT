@@ -122,8 +122,8 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                             y == 9 or lst1[x][y + 1] == 0):
                         ships.append(lst1[x][y])
         # счетчик кораблей
-        '''if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
-            error.append(4)'''
+        if ships.count(1) != 4 or ships.count(2) != 3 or ships.count(3) != 2 or ships.count(4) != 1:
+            error.append(4)
 
         self.lst1 = lst1
 
@@ -176,6 +176,9 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                 mark = self.hurt_or_kill(message.objectName())
                 message = mark + message.objectName()+'_2'
                 self.client.send(message.encode('ascii'))
+                if self.check_finish():
+                    self.text_field.setText('Вы проиграли(')
+                    self.client.send('finish'.encode('ascii'))
             else:
                 message.setText('*')
                 message = '*' + str(message.objectName()) + '_2'
@@ -183,48 +186,60 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                 for btn in self.btns_2:
                     btn.setEnabled(True)
         else:
-            self.text_field.setText(message)
-            mark = message[0]
-            message = message[1:]
-            for btn in self.btns_2:
-                if btn.objectName() == message:
-                    message = btn
-                    break
-            message.setText(mark)
-            self.btns_2.remove(message)
-            if mark == 'X' or mark == 'r':
+            self.text_field.setText('ВЫ ВЫИГРАЛИ !!!' if message == 'finish' else message)
+            if message != 'finish':
+                mark = message[0]
+                message = message[1:]
                 for btn in self.btns_2:
-                    btn.setEnabled(True)
-
+                    if btn.objectName() == message:
+                        message = btn
+                        break
+                message.setText(mark)
+                self.btns_2.remove(message)
+                if mark == 'X' or mark == 'r':
+                    for btn in self.btns_2:
+                        btn.setEnabled(True)
+            else:
+                for btn in self.btns_2:
+                    btn.setEnabled(False)
 
     def hurt_or_kill(self, btn):
         column = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9}
         x = column[btn[0]]
         y = int(btn[1])-1 if btn[2] == 's' else int(btn[1:3])-1
-
-        r = 0
-        x1 = x
-        y1 = y
+        r, x1, y1 = 0, x, y
+        self.lst1[x][y] = -1
         while x1>0 and self.lst1[x1-1][y] != 0:
             if self.lst1[x1-1][y] > 0:
                 r += 1
             x1 -= 1
+        if r>0:
+            return 'r'
         x1 = x
         while x1<9 and self.lst1[x1+1][y] != 0:
             if self.lst1[x1+1][y] > 0:
                 r += 1
             x1 += 1
+        if r>0:
+            return 'r'
         while y1>0 and self.lst1[x][y1-1] != 0:
             if self.lst1[x][y1-1] > 0:
                 r += 1
             y1 -= 1
+        if r>0:
+            return 'r'
         y1 = y
         while y1<9 and self.lst1[x][y1+1] != 0:
             if self.lst1[x][y1+1] > 0:
                 r += 1
             y1 += 1
-        self.lst1[x][y] = -1
         return 'r' if r > 0 else 'X'
+
+    def check_finish(self):
+        x = 0
+        for z in self.lst1:
+            x += z.count(-1)
+        return x == 20
 
 
 if __name__ == '__main__':

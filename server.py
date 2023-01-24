@@ -4,7 +4,7 @@ import threading
 import time
 
 host = '127.0.0.1'
-port = 7010
+port = 7000
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
@@ -17,7 +17,6 @@ nicknames = []
 def broadcast(message):
     for client in clients:
         if client != message[0]:
-            print('message', message)
             client.send(message[1])
 
 

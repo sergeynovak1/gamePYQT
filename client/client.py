@@ -13,7 +13,7 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
     def __init__(self):
         super(Chat, self).__init__()
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.1', 7010))
+        self.client.connect(('127.0.0.1', 7000))
         uic.loadUi("untitled.ui", self)
 
         self.setStyleSheet("#frame{border-image:url(static/background.jpg)}")
@@ -39,23 +39,33 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
                      self.j1s, self.j2s, self.j3s, self.j4s, self.j5s, self.j6s, self.j7s, self.j8s, self.j9s,
                      self.j10s]
 
-        self.btns_2 = [self.a1s_2, self.a2s_2, self.a3s_2, self.a4s_2, self.a5s_2, self.a6s_2, self.a7s_2, self.a8s_2, self.a9s_2, self.a10s_2,
-                     self.b1s_2, self.b2s_2, self.b3s_2, self.b4s_2, self.b5s_2, self.b6s_2, self.b7s_2, self.b8s_2, self.b9s_2, self.b10s_2,
-                     self.c1s_2, self.c2s_2, self.c3s_2, self.c4s_2, self.c5s_2, self.c6s_2, self.c7s_2, self.c8s_2, self.c9s_2, self.c10s_2,
-                     self.d1s_2, self.d2s_2, self.d3s_2, self.d4s_2, self.d5s_2, self.d6s_2, self.d7s_2, self.d8s_2, self.d9s_2,
-                     self.d10s_2,
-                     self.e1s_2, self.e2s_2, self.e3s_2, self.e4s_2, self.e5s_2, self.e6s_2, self.e7s_2, self.e8s_2, self.e9s_2,
-                     self.e10s_2,
-                     self.f1s_2, self.f2s_2, self.f3s_2, self.f4s_2, self.f5s_2, self.f6s_2, self.f7s_2, self.f8s_2, self.f9s_2,
-                     self.f10s_2,
-                     self.g1s_2, self.g2s_2, self.g3s_2, self.g4s_2, self.g5s_2, self.g6s_2, self.g7s_2, self.g8s_2, self.g9s_2,
-                     self.g10s_2,
-                     self.h1s_2, self.h2s_2, self.h3s_2, self.h4s_2, self.h5s_2, self.h6s_2, self.h7s_2, self.h8s_2, self.h9s_2,
-                     self.h10s_2,
-                     self.i1s_2, self.i2s_2, self.i3s_2, self.i4s_2, self.i5s_2, self.i6s_2, self.i7s_2, self.i8s_2, self.i9s_2,
-                     self.i10s_2,
-                     self.j1s_2, self.j2s_2, self.j3s_2, self.j4s_2, self.j5s_2, self.j6s_2, self.j7s_2, self.j8s_2, self.j9s_2,
-                     self.j10s_2]
+        self.btns_2 = [self.a1s_2, self.a2s_2, self.a3s_2, self.a4s_2, self.a5s_2, self.a6s_2, self.a7s_2, self.a8s_2,
+                       self.a9s_2, self.a10s_2,
+                       self.b1s_2, self.b2s_2, self.b3s_2, self.b4s_2, self.b5s_2, self.b6s_2, self.b7s_2, self.b8s_2,
+                       self.b9s_2, self.b10s_2,
+                       self.c1s_2, self.c2s_2, self.c3s_2, self.c4s_2, self.c5s_2, self.c6s_2, self.c7s_2, self.c8s_2,
+                       self.c9s_2, self.c10s_2,
+                       self.d1s_2, self.d2s_2, self.d3s_2, self.d4s_2, self.d5s_2, self.d6s_2, self.d7s_2, self.d8s_2,
+                       self.d9s_2,
+                       self.d10s_2,
+                       self.e1s_2, self.e2s_2, self.e3s_2, self.e4s_2, self.e5s_2, self.e6s_2, self.e7s_2, self.e8s_2,
+                       self.e9s_2,
+                       self.e10s_2,
+                       self.f1s_2, self.f2s_2, self.f3s_2, self.f4s_2, self.f5s_2, self.f6s_2, self.f7s_2, self.f8s_2,
+                       self.f9s_2,
+                       self.f10s_2,
+                       self.g1s_2, self.g2s_2, self.g3s_2, self.g4s_2, self.g5s_2, self.g6s_2, self.g7s_2, self.g8s_2,
+                       self.g9s_2,
+                       self.g10s_2,
+                       self.h1s_2, self.h2s_2, self.h3s_2, self.h4s_2, self.h5s_2, self.h6s_2, self.h7s_2, self.h8s_2,
+                       self.h9s_2,
+                       self.h10s_2,
+                       self.i1s_2, self.i2s_2, self.i3s_2, self.i4s_2, self.i5s_2, self.i6s_2, self.i7s_2, self.i8s_2,
+                       self.i9s_2,
+                       self.i10s_2,
+                       self.j1s_2, self.j2s_2, self.j3s_2, self.j4s_2, self.j5s_2, self.j6s_2, self.j7s_2, self.j8s_2,
+                       self.j9s_2,
+                       self.j10s_2]
 
         for btn in self.btns_2:
             btn.setEnabled(False)
@@ -127,7 +137,6 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
 
         self.lst1 = lst1
 
-
         if len(error) == 0:
             for btn in self.btns:
                 btn.setEnabled(False)
@@ -174,7 +183,7 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
             if message.text():
                 message.setStyleSheet('color:red')
                 mark = self.hurt_or_kill(message.objectName())
-                message = mark + message.objectName()+'_2'
+                message = mark + message.objectName() + '_2'
                 self.client.send(message.encode('ascii'))
                 if self.check_finish():
                     self.text_field.setText('Вы проиграли(')
@@ -206,31 +215,31 @@ class Chat(QMainWindow, client_ui.Ui_MainWindow):
     def hurt_or_kill(self, btn):
         column = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9}
         x = column[btn[0]]
-        y = int(btn[1])-1 if btn[2] == 's' else int(btn[1:3])-1
+        y = int(btn[1]) - 1 if btn[2] == 's' else int(btn[1:3]) - 1
         r, x1, y1 = 0, x, y
         self.lst1[x][y] = -1
-        while x1>0 and self.lst1[x1-1][y] != 0:
-            if self.lst1[x1-1][y] > 0:
+        while x1 > 0 and self.lst1[x1 - 1][y] != 0:
+            if self.lst1[x1 - 1][y] > 0:
                 r += 1
             x1 -= 1
-        if r>0:
+        if r > 0:
             return 'r'
         x1 = x
-        while x1<9 and self.lst1[x1+1][y] != 0:
-            if self.lst1[x1+1][y] > 0:
+        while x1 < 9 and self.lst1[x1 + 1][y] != 0:
+            if self.lst1[x1 + 1][y] > 0:
                 r += 1
             x1 += 1
-        if r>0:
+        if r > 0:
             return 'r'
-        while y1>0 and self.lst1[x][y1-1] != 0:
-            if self.lst1[x][y1-1] > 0:
+        while y1 > 0 and self.lst1[x][y1 - 1] != 0:
+            if self.lst1[x][y1 - 1] > 0:
                 r += 1
             y1 -= 1
-        if r>0:
+        if r > 0:
             return 'r'
         y1 = y
-        while y1<9 and self.lst1[x][y1+1] != 0:
-            if self.lst1[x][y1+1] > 0:
+        while y1 < 9 and self.lst1[x][y1 + 1] != 0:
+            if self.lst1[x][y1 + 1] > 0:
                 r += 1
             y1 += 1
         return 'r' if r > 0 else 'X'
